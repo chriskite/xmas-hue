@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'hue'
+
+HUES = [12750, 25500, 43920, 53100, 65280]
+
+class Bulb
+  def initialize(light, hue_idx)
+    @light = light
+    @hue_idx = hue_idx
+
+    @light.saturation = 255
+  end
+
+  def change
+    @light.hue = HUES[@hue_idx]
+    @hue_idx = (@hue_idx + 1) % HUES.size
+  end
+end
+
+group_id = ARGV.shift
+username = ARGV.shift
+
+puts "XMAS on group #{group_id} with username '#{username}'"
+
+c = Hue::Client.new(username)
+
+bulbs = c.group(group_id).lights.map { |l| Bulb.new(l, l.id.to_i % HUES.size) }
+
+loop do
+  bulbs.each { |b| b.change } 
+  sleep 1
+end
