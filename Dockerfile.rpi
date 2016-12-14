@@ -3,6 +3,22 @@ FROM resin/rpi-raspbian:jessie
 RUN apt-get update \
     && apt-get install -y \
        libcurl4-openssl-dev \
+       build-essential \
+       bison \
+       openssl \
+       libreadline6 \
+       libreadline6-dev \
+       curl git-core \
+       zlib1g \
+       zlib1g-dev \
+       libssl-dev \
+       libyaml-dev \
+       libxml2-dev \
+       autoconf \
+       libc6-dev \
+       ncurses-dev \
+       automake \
+       libtool \
        ruby \
        ruby-dev \
     && rm -rf /var/lib/apt/lists/*
